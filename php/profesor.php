@@ -211,7 +211,7 @@ public function registrar($id,$nombre,$paterno,$materno,$correo,$password,$num_c
        try
        {   
            	
-			$stmt = $this->db->prepare("INSERT INTO profesor (id,nombre,paterno,materno,email,password,num_cub,ext_tel,tipo) VALUES (:id,:nombre,:paterno,:materno,:correo,:password,:num_cub,ext_tel,1)");
+			$stmt = $this->db->prepare("INSERT INTO profesor (id,nombre,paterno,materno,email,password,num_cub,ext_tel,tipo) VALUES (:id,:nombre,:paterno,:materno,:correo,:password,:num_cub,:ext_tel,1)");
 			$stmt->bindParam(":id",$id);
 			$stmt->bindParam(":nombre",$nombre);
 			$stmt->bindParam(":paterno",$paterno);
@@ -231,8 +231,7 @@ public function registrar($id,$nombre,$paterno,$materno,$correo,$password,$num_c
                 
                 return $stmt;
 			
-			}
-		
+
        catch(PDOException $e)
        {
            echo $e->getMessage();
