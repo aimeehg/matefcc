@@ -19,6 +19,12 @@ $prof = mysqli_fetch_assoc($result);
 
       foreach($json as $item) {
 
+$sql = "SELECT * FROM alumno where matricula=$item";
+$result = mysqli_query($con, $sql);
+
+
+if (mysqli_field_count($con)) {
+  # code...
 
        if(!mysqli_query($con,"INSERT INTO inscripcion (id_curso, id_alumno) VALUES ($nrc,'".$item['matricula']."')")){
            $error = true; //error
@@ -28,9 +34,10 @@ $prof = mysqli_fetch_assoc($result);
        if(!mysqli_query($con,"INSERT INTO parcial (id_curso_parcial,num_p,matricula) VALUES ($nrc,$i,'".$item['matricula']."')")){
            $error = true; //error
        }
+       $parcial=$con->insert_id;
 
       $crit="Examen";
-       if(!mysqli_query($con,"INSERT INTO criterios_evaluacion (nrc_curso,id_profesor,descripcion,porcentaje,evaluado,id_parcial_cri)  VALUES  ($nrc,".$prof['id_profesor'].",'Examen','50','1','$i')")){
+       if(!mysqli_query($con,"INSERT INTO criterios_evaluacion (nrc_curso,id_profesor,descripcion,porcentaje,evaluado,id_parcial_cri)  VALUES  ($nrc,".$prof['id_profesor'].",'Examen','50','1',$parcial)")){
            $error = true; //error
        }else{
         $last_id = $con->insert_id;
@@ -66,7 +73,7 @@ $prof = mysqli_fetch_assoc($result);
         echo 0; //error
     }else echo 1;
 
-
+}
 mysqli_close($con);
   } else {
     echo "Error post";
